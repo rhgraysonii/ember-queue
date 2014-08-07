@@ -2,12 +2,19 @@ App = Ember.Application.create();
 
 App.Router.map(function() {
   this.route('help');
+  this.route('queue');
 });
 
 // Routes
 App.HelpRoute = Ember.Route.extend({
   model: function() {
     return this.store.createRecord('ticket')
+  }
+});
+
+App.QueueRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('ticket');
   }
 });
 
@@ -18,7 +25,7 @@ App.HelpController = Ember.ObjectController.extend({
       this.get('model').set('open', true).save();
     }
   }
-})
+});
 
 // Models
 App.Ticket = DS.Model.extend({
