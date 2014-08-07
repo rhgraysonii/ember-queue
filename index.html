@@ -13,6 +13,13 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="help">
+    <form>
+      <label for="student-name">
+      {{input id="student-name" valueBinding='student' placeholder="Please enter your name"}}
+      <button type="submit" {{action 'createTicket'}}>Help!</button>
+    </form>
+  </script>
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.6.1.js"></script>
