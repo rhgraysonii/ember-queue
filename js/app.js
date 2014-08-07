@@ -30,9 +30,14 @@ App.HelpController = Ember.ObjectController.extend({
 App.QueueController = Ember.ArrayController.extend({
   actions: {
     closeTicket: function(ticket) {
-      ticket.set('open', false);
+      ticket.set('open', false).save();
     }
-  }
+  },
+  openTickets: function() {
+    return this.get('model').filter(function(ticket) {
+      return ticket.get('open');
+    });
+  }.property('model.@each.open')
 });
 
 // Models
