@@ -14,3 +14,5 @@ request so I am not overwhelmed by questions students can figure out on their
 own.
 - As a teacher I want students to request help using their full name and picture
 so I can better associate student names and faces.
+- As a student, I want to be able to say I no longer need help so a teacher
+doesn't have to come over anymore.
