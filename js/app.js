@@ -22,7 +22,10 @@ App.QueueRoute = Ember.Route.extend({
 App.HelpController = Ember.ObjectController.extend({
   actions: {
     createTicket: function() {
-      this.get('model').set('open', true).save();
+      model = this.get('model');
+      model.set('open', true);
+      model.set('createdAt', new Date());
+      model.save();
     }
   }
 });
@@ -33,17 +36,28 @@ App.QueueController = Ember.ArrayController.extend({
       ticket.set('open', false).save();
     }
   },
-  openTickets: function() {
-    return this.get('model').filter(function(ticket) {
+  tickets: function() {
+    var openTickets = this.get('model').filter(function(ticket) {
       return ticket.get('open');
+    })
+
+    var orderedTickets = openTickets.sort(function(a, b) {
+      if (a.get('createdAt') > b.get('createdAt')) {
+        return 1;
+      } else {
+        return -1;
+      }
     });
+
+    return orderedTickets;
   }.property('model.@each.open')
 });
 
 // Models
 App.Ticket = DS.Model.extend({
   student: DS.attr('string'),
-  open: DS.attr('boolean')
+  open: DS.attr('boolean'),
+  createdAt: DS.attr('date')
 });
 
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({

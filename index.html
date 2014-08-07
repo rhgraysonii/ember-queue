@@ -23,7 +23,7 @@
 
   <script type="text/x-handlebars" id="queue">
     <ul>
-      {{#each openTickets}}
+      {{#each tickets}}
         <li>{{student}} <button type="button" {{action "closeTicket" this}}>close</button></li>
       {{/each}}
     </ul>
