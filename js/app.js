@@ -27,6 +27,14 @@ App.HelpController = Ember.ObjectController.extend({
   }
 });
 
+App.QueueController = Ember.ArrayController.extend({
+  actions: {
+    closeTicket: function(ticket) {
+      ticket.set('open', false);
+    }
+  }
+});
+
 // Models
 App.Ticket = DS.Model.extend({
   student: DS.attr('string'),

@@ -24,7 +24,7 @@
   <script type="text/x-handlebars" id="queue">
     <ul>
       {{#each}}
-        <li>{{student}} - <span>{{#if open}}OPEN{{else}}CLOSED{{/if}}</span></li>
+        <li>{{student}} - <span {{action "closeTicket" this}}>{{#if open}}OPEN{{else}}CLOSED{{/if}}</span></li>
       {{/each}}
     </ul>
   </script>
