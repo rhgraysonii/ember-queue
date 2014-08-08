@@ -10,7 +10,7 @@ the order they asked.
 - As a teacher I want to see a list of students who have asked for help in the
 order they requested so I can keep track of who needs help. DONE
 - As a student I want to see a confirmation message so I know my help ticket
-went through and I know how many people are ahead of me.
+went through. DONE
 - As a teacher, I want students to answer a series of questions before they can
 request so I am not overwhelmed by questions students can figure out on their
 own.
