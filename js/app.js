@@ -1,7 +1,8 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-  this.route('help');
+  this.route('help', { path: '/' });
+  this.route('queued');
   this.route('queue');
 });
 
@@ -22,10 +23,14 @@ App.QueueRoute = Ember.Route.extend({
 App.HelpController = Ember.ObjectController.extend({
   actions: {
     createTicket: function() {
+      var controller = this;
       model = this.get('model');
       model.set('open', true);
       model.set('createdAt', new Date());
-      model.save();
+      model.save()
+      .then(function() {
+        controller.transitionToRoute('queued');
+      });
     }
   }
 });
