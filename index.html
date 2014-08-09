@@ -3,34 +3,57 @@
 <head>
   <meta charset="utf-8">
   <title>Ember Queue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- allows site to act as a native app when saved to the homescreen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="icon" sizes="196x196" href="nice-highres.png">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
   <script type="text/x-handlebars" id="application">
-    <h2>Queue</h2>
-
+    <h2 class="text-center page-header navbar-fixed-top">Queue</h2>
     {{outlet}}
   </script>
 
   <script type="text/x-handlebars" id="help">
-    <form>
-      <label for="student-name">
-      {{input id="student-name" valueBinding='student' placeholder="Please enter your name"}}
-      <button type="submit" {{action 'createTicket'}}>Help!</button>
-    </form>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 new-ticket-form text-center">
+      <form class="form">
+        <label for="student-name" class="sr-only">Your name</label>
+        <div class="form-group">
+          {{input class="form-control" id="student-name" valueBinding='student' placeholder="Please enter your name"}}
+        </div>
+        <div class="form-group">
+          {{textarea class="form-control" rows="5"}}
+        </div>
+        <button class="btn btn-danger pull-right" type="submit" {{action 'createTicket'}}>Help!</button>
+      </form>
+    </div>
   </script>
 
   <script type="text/x-handlebars" id="queue">
-    <ul>
+    <ul class="list-group queue">
       {{#each tickets}}
-        <li>{{student}} <button type="button" {{action "closeTicket" this}}>close</button></li>
+        <li class="list-group-item">
+          <div class="container">
+            <span class="student-name">{{student}}</span>
+            <button class="btn btn-danger btn-sm pull-right" {{action "closeTicket" this}}>close</button>
+          </div>
+        </li>
       {{/each}}
     </ul>
   </script>
 
   <script type="text/x-handlebars" id="queued">
-    <p>Help is on the way. Leave this page open while you continue working on the problem.</p>
+    <div class="text-center col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+      <p>Help is on the way.</p>
+      <p>Leave this page open while you continue working on the problem.</p>
+    </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
@@ -42,5 +65,6 @@
   <script src="https://cdn.firebase.com/libs/emberfire/1.1.3/emberfire.min.js"></script>
 
   <script src="js/app.js"></script>
+
 </body>
 </html>
