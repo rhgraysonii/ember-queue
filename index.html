@@ -71,7 +71,7 @@
   <script type="text/x-handlebars" id="ticket">
     <li class="list-group-item">
       <span class="student-name">{{student}}</span> -
-      <span class="text-muted">{{relativeTime}}</span>
+      <span class="text-muted">{{timeAgo}}</span>
 
       <button class="btn btn-danger btn-sm pull-right" {{action "closeTicket" this}}>close</button>
     </li>
@@ -79,8 +79,13 @@
 
   <script type="text/x-handlebars" id="queued">
     <div id="queued" class="text-center col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
-      <p class="lead">Help is on the way.</p>
-      <p>Leave this page open while you continue working on the problem.</p>
+      {{#if open}}
+        <p class="lead">Thanks, {{student}}. Help is on the way.</p>
+        <p>Leave this page open while you continue working on the problem.</p>
+        <button class="btn btn-danger" {{action "closeTicket" this}}>Nevermind, we got it.</button>
+      {{else}}
+        <p class="lead">Your ticket has been closed.</p>
+      {{/if}}
     </div>
   </script>
 

@@ -2,7 +2,7 @@ App = Ember.Application.create();
 
 App.Router.map(function() {
   this.route('help', { path: '/' });
-  this.route('queued');
+  this.route('ticket', { path: '/ticket/:ticket_id' });
   this.route('queue');
 });
 
@@ -24,6 +24,15 @@ App.HelpRoute = Ember.Route.extend({
   }
 });
 
+App.TicketRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.store.find('ticket', params.ticket_id)
+  },
+  renderTemplate: function() {
+    this.render('queued');
+  }
+});
+
 App.QueueRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('ticket');
@@ -40,7 +49,7 @@ App.HelpController = Ember.ObjectController.extend({
       model.set('createdAt', new Date());
       model.save()
       .then(function() {
-        controller.transitionToRoute('queued');
+        controller.transitionToRoute('ticket', model);
       });
     },
 
@@ -64,11 +73,6 @@ App.HelpController = Ember.ObjectController.extend({
 
 App.QueueController = Ember.ArrayController.extend({
   itemController: 'ticket',
-  actions: {
-    closeTicket: function(ticket) {
-      ticket.set('open', false).save();
-    }
-  },
   tickets: function() {
     var openTickets = this.get('model').filter(function(ticket) {
       return ticket.get('open');
@@ -88,16 +92,21 @@ App.QueueController = Ember.ArrayController.extend({
 
 App.TicketController = Ember.ObjectController.extend({
   needs: ['application'],
-  relativeTime: function() {
+  timeAgo: function() {
     return moment(this.get('createdAt')).fromNow();
-  }.property('controllers.application.now')
+  }.property('controllers.application.now'),
+  actions: {
+    closeTicket: function() {
+      this.get('model').set('open', false).save()
+    }
+  }
 });
 
 // Models
 App.Ticket = DS.Model.extend({
   student: DS.attr('string'),
   open: DS.attr('boolean'),
-  createdAt: DS.attr('date'),
+  createdAt: DS.attr('date')
 });
 
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({
