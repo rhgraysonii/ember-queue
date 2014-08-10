@@ -35,17 +35,28 @@
   </script>
 
   <script type="text/x-handlebars" id="help">
-    <div id="new-ticket-form" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center">
-      <form class="form">
-        <label for="student-name" class="sr-only">Your name</label>
-        <div class="form-group">
-          {{input class="form-control" id="student-name" valueBinding='student' placeholder="Please enter your name"}}
-        </div>
-        <div class="form-group">
-          {{textarea class="form-control" rows="5"}}
-        </div>
-        <button class="btn btn-danger pull-right" type="submit" {{action 'createTicket'}}>Help!</button>
-      </form>
+    {{#if currentQuestion}}
+      {{render 'question' currentQuestion}}
+    {{else}}
+      <div id="new-ticket-form" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center">
+        <form class="form">
+          <label for="student-name" class="sr-only">Your name</label>
+          <div class="form-group">
+            {{input class="form-control" id="student-name" valueBinding='student' placeholder="Please enter your name"}}
+          </div>
+          <div class="form-group">
+            {{textarea class="form-control" rows="5"}}
+          </div>
+          <button class="btn btn-danger pull-right" type="submit" {{action 'createTicket'}}>Help!</button>
+        </form>
+      </div>
+    {{/if}}
+  </script>
+
+  <script type="text/x-handlebars" id="question">
+    <div id="question" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center">
+      <p class="lead">{{model}}</p>
+      <button class="btn btn-danger" {{action 'nextQuestion'}}>Yes >></button>
     </div>
   </script>
 
@@ -67,8 +78,8 @@
   </script>
 
   <script type="text/x-handlebars" id="queued">
-    <div class="text-center col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
-      <p>Help is on the way.</p>
+    <div id="queued" class="text-center col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+      <p class="lead">Help is on the way.</p>
       <p>Leave this page open while you continue working on the problem.</p>
     </div>
   </script>

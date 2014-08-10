@@ -42,8 +42,24 @@ App.HelpController = Ember.ObjectController.extend({
       .then(function() {
         controller.transitionToRoute('queued');
       });
+    },
+
+    nextQuestion: function() {
+      var questions = this.get('questions')
+      var next = questions.shift();
+      this.set('currentQuestion', next)
     }
-  }
+  },
+
+  questions: [
+    "Have you gone through all the steps on the Learn How to Program debugging lesson?",
+    "Have you asked another pair for help?",
+    "Have you spent 15 minutes going through through the problem documenting every step?"
+  ],
+
+  currentQuestion: function() {
+    return this.get('questions').shift();
+  }.property()
 });
 
 App.QueueController = Ember.ArrayController.extend({
