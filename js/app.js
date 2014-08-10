@@ -7,9 +7,20 @@ App.Router.map(function() {
 });
 
 // Routes
+App.ApplicationRoute = Em.Route.extend({
+  setupController:function(controller, model){
+    this.startGlobalTime();
+  },
+  startGlobalTime: function() {
+    var controller = this.get('controller');
+    controller.set('now', Date.now());
+    Ember.run.later(this, this.startGlobalTime, 2000);
+  }
+});
+
 App.HelpRoute = Ember.Route.extend({
   model: function() {
-    return this.store.createRecord('ticket')
+    return this.store.createRecord('ticket');
   }
 });
 
@@ -36,6 +47,7 @@ App.HelpController = Ember.ObjectController.extend({
 });
 
 App.QueueController = Ember.ArrayController.extend({
+  itemController: 'ticket',
   actions: {
     closeTicket: function(ticket) {
       ticket.set('open', false).save();
@@ -58,11 +70,18 @@ App.QueueController = Ember.ArrayController.extend({
   }.property('model.@each.open')
 });
 
+App.TicketController = Ember.ObjectController.extend({
+  needs: ['application'],
+  relativeTime: function() {
+    return moment(this.get('createdAt')).fromNow();
+  }.property('controllers.application.now')
+});
+
 // Models
 App.Ticket = DS.Model.extend({
   student: DS.attr('string'),
   open: DS.attr('boolean'),
-  createdAt: DS.attr('date')
+  createdAt: DS.attr('date'),
 });
 
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({
