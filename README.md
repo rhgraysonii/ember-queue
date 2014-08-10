@@ -13,7 +13,7 @@ order they requested so I can keep track of who needs help. DONE
 went through. DONE
 - As a teacher, I want students to answer a series of questions before they can
 request so I am not overwhelmed by questions students can figure out on their
-own.
+own. DONE
 - As a teacher I want students to request help using their full name and picture
 so I can better associate student names and faces.
 - As a student, I want to be able to say I no longer need help so a teacher
