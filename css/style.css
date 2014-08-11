@@ -43,6 +43,15 @@ h2 {
   font-size: 150%;
 }
 
+.well {
+  margin-bottom: 10px
+}
+
+.question {
+  font-family: "Courier New", monospace;
+  margin-top: 20px
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px) {

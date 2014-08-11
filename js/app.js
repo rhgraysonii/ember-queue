@@ -92,21 +92,42 @@ App.QueueController = Ember.ArrayController.extend({
 
 App.TicketController = Ember.ObjectController.extend({
   needs: ['application'],
+  isExpanded: false,
   timeAgo: function() {
     return moment(this.get('createdAt')).fromNow();
   }.property('controllers.application.now'),
   actions: {
     closeTicket: function() {
       this.get('model').set('open', false).save()
+    },
+    expand: function() {
+      this.set('isExpanded', true);
+    },
+    collapse: function() {
+      this.set('isExpanded', false);
+    },
+    toggleExpanded: function() {
+      var currentState = this.get('isExpanded');
+      this.set('isExpanded', !currentState);
     }
   }
 });
+
+App.TicketView = Ember.View.extend({
+  touchStart: function(event) {
+    this.get('controller').send('toggleExpanded');
+  },
+  click: function() {
+    this.get('controller').send('toggleExpanded');
+  }
+})
 
 // Models
 App.Ticket = DS.Model.extend({
   student: DS.attr('string'),
   open: DS.attr('boolean'),
-  createdAt: DS.attr('date')
+  createdAt: DS.attr('date'),
+  question: DS.attr('string')
 });
 
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({
