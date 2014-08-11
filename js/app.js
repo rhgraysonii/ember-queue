@@ -45,12 +45,16 @@ App.HelpController = Ember.ObjectController.extend({
     createTicket: function() {
       var controller = this;
       model = this.get('model');
-      model.set('open', true);
-      model.set('createdAt', new Date());
-      model.save()
-      .then(function() {
-        controller.transitionToRoute('ticket', model);
-      });
+      if (model.get('student') && model.get('question')) {
+        model.set('open', true);
+        model.set('createdAt', new Date());
+        model.save()
+        .then(function() {
+          controller.transitionToRoute('ticket', model);
+        });
+      } else {
+        alert('Please enter your names and questions');
+      }
     },
 
     nextQuestion: function() {
