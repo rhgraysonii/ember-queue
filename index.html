@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <script type="text/x-handlebars" id="application">
@@ -71,9 +71,9 @@
   <script type="text/x-handlebars" id="ticket">
     <li class="list-group-item">
       <div>
-        <span class="student-name">{{student}}</span>
-        <span class="text-muted">{{timeAgo}}</span>
         <button class="btn btn-danger btn-sm pull-right" {{action "closeTicket" this}}>close</button>
+        <span class="student-name">{{student}}</span><br>
+        <span class="time-ago text-muted">{{timeAgo}}</span>
         {{#if isExpanded}}
           <div class="well question">
             <p>{{question}}</p>

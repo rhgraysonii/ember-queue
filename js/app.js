@@ -114,7 +114,7 @@ App.TicketController = Ember.ObjectController.extend({
 });
 
 App.TicketView = Ember.View.extend({
-  touchStart: function(event) {
+  touchEnd: function(event) {
     this.get('controller').send('toggleExpanded');
   },
   click: function() {

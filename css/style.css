@@ -47,6 +47,10 @@ h2 {
   border-right: 0px;
 }
 
+.time-ago {
+  font-size: 80%;
+}
+
 #new-ticket-form, #question, #queued {
   margin-top: 40px;
 }
