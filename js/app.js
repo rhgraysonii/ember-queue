@@ -114,8 +114,15 @@ App.TicketController = Ember.ObjectController.extend({
 });
 
 App.TicketView = Ember.View.extend({
+  scrolling: false,
   touchEnd: function(event) {
-    this.get('controller').send('toggleExpanded');
+    if (!this.get('scrolling')) {
+      this.get('controller').send('toggleExpanded');
+    }
+    this.set('scrolling', false);
+  },
+  touchMove: function(event) {
+    this.set('scrolling', true);
   },
   click: function() {
     this.get('controller').send('toggleExpanded');
