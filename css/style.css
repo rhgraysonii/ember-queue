@@ -25,6 +25,18 @@ h2 {
   background-color: #f05a26;
 }
 
+.home {
+  text-decoration: none;
+  color: #eee;
+  cursor: pointer;
+}
+
+.home:hover {
+  text-decoration: none;
+  color: #eee;
+  cursor: pointer;
+}
+
 #student-name {
   width: 100%;
 }
