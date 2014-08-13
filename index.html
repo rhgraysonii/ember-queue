@@ -96,9 +96,19 @@
   </script>
 
   <script type="text/x-handlebars" id="statistics">
-    <h3>Daily statistics</h3>
-    Tickets closed: {{numberOfTickets}}
-    Average wait time: {{averageWaitTime}} seconds
+    <h3 class="text-center sub-heading">Daily statistics</h3>
+    <div class="row">
+      <div class="text-center left-cell col-xs-6">
+        <span class="small-text">Closed</span><br>
+        <span class="large-text">{{numberOfTickets}}</span><br>
+        <span class="small-text">tickets</span>
+      </div>
+      <div class="text-center col-xs-6">
+        <span class="small-text">Average wait time</span><br>
+        <span class="large-text">{{averageWaitTime}}</span><br>
+        <span class="small-text">seconds</span>
+      </div>
+    </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

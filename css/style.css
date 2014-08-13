@@ -68,6 +68,22 @@ h2 {
   margin-top: 20px
 }
 
+.sub-heading {
+  margin-bottom: 20px;
+}
+
+.left-cell {
+  border-right: 1px solid #ccc;
+}
+
+.large-text {
+  font-size: 300%;
+}
+
+.small-text {
+  font-size: 80%;
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px) {
