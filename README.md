@@ -16,9 +16,5 @@ request so I am not overwhelmed by questions students can figure out on their
 own. __DONE__
 - As a student, I want to be able to say I no longer need help so a teacher
 doesn't have to come over anymore. __DONE__
-- As a teacher, I want students to request help using their full name and
-picture so I can better associate student names and faces.
-- As a student, I want to see number I am in line so I can have an idea of how
-long I'll have to wait.
 - As a teacher, I want to see statistics on how long tickets are staying open so
 I know if I'm reaching students in a timely manner.
