@@ -125,24 +125,22 @@ App.TicketController = Ember.ObjectController.extend({
 });
 
 App.StatisticsController = Ember.ArrayController.extend({
-  todaysTickets: function() {
+  todaysClosedTickets: function() {
     var this_day = moment().date();
     var this_month = moment().month();
     var this_year = moment().year();
     return this.get('model').filter(function(ticket) {
       var createdAt = moment(ticket.get('createdAt'));
-      return createdAt.date() === this_day && createdAt.month() === this_month && createdAt.year() === this_year;
+      return createdAt.date() === this_day && createdAt.month() === this_month && createdAt.year() === this_year && !ticket.get('open');
     });
   }.property('model.@each'),
 
   numberOfTickets: function() {
-    return this.get('todaysTickets').length
+    return this.get('todaysClosedTickets').length
   }.property('model.@each'),
 
   averageWaitTime: function() {
-    var waitTimes = this.get('todaysTickets').filter(function(ticket) {
-      return !ticket.get('open')
-    }).map(function(ticket) {
+    var waitTimes = this.get('todaysClosedTickets').map(function(ticket) {
       var createdAt = moment(ticket.get('createdAt'));
       var closedAt = moment(ticket.get('closedAt'));
       return closedAt.diff(createdAt, 'seconds');
