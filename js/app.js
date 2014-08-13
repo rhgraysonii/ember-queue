@@ -4,6 +4,7 @@ App.Router.map(function() {
   this.route('help', { path: '/' });
   this.route('ticket', { path: '/ticket/:ticket_id' });
   this.route('queue');
+  this.route('statistics');
 });
 
 // Routes
@@ -38,6 +39,12 @@ App.QueueRoute = Ember.Route.extend({
     return this.store.find('ticket');
   }
 });
+
+App.StatisticsRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('ticket');
+  }
+})
 
 // Controllers
 App.HelpController = Ember.ObjectController.extend({
@@ -102,7 +109,7 @@ App.TicketController = Ember.ObjectController.extend({
   }.property('controllers.application.now'),
   actions: {
     closeTicket: function() {
-      this.get('model').set('open', false).save()
+      this.get('model').setProperties({'closedAt': new Date(), 'open': false});
     },
     expand: function() {
       this.set('isExpanded', true);
@@ -117,6 +124,37 @@ App.TicketController = Ember.ObjectController.extend({
   }
 });
 
+App.StatisticsController = Ember.ArrayController.extend({
+  todaysTickets: function() {
+    var this_day = moment().date();
+    var this_month = moment().month();
+    var this_year = moment().year();
+    return this.get('model').filter(function(ticket) {
+      var createdAt = moment(ticket.get('createdAt'));
+      return createdAt.date() === this_day && createdAt.month() === this_month && createdAt.year() === this_year;
+    });
+  }.property('model.@each'),
+
+  numberOfTickets: function() {
+    return this.get('todaysTickets').length
+  }.property('model.@each'),
+
+  averageWaitTime: function() {
+    var waitTimes = this.get('todaysTickets').filter(function(ticket) {
+      return !ticket.get('open')
+    }).map(function(ticket) {
+      var createdAt = moment(ticket.get('createdAt'));
+      var closedAt = moment(ticket.get('closedAt'));
+      return closedAt.diff(createdAt, 'seconds');
+    });
+
+    return waitTimes.reduce(function(sum, next) {
+      return sum + next;
+    }) / waitTimes.length
+  }.property('model.@each.open')
+});
+
+//Views
 App.TicketView = Ember.View.extend({
   scrolling: false,
   touchEnd: function(event) {
@@ -138,6 +176,7 @@ App.Ticket = DS.Model.extend({
   student: DS.attr('string'),
   open: DS.attr('boolean'),
   createdAt: DS.attr('date'),
+  closedAt: DS.attr('date'),
   question: DS.attr('string')
 });
 
