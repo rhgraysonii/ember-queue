@@ -125,6 +125,10 @@ App.TicketController = Ember.ObjectController.extend({
 });
 
 App.StatisticsController = Ember.ArrayController.extend({
+  displaySeconds: function() {
+    return this.get('averageWaitTime') <= 120;
+  }.property('model.@each.open'),
+
   todaysClosedTickets: function() {
     var this_day = moment().date();
     var this_month = moment().month();
@@ -151,6 +155,10 @@ App.StatisticsController = Ember.ArrayController.extend({
     }) / waitTimes.length
 
     return Math.round(averageTime);
+  }.property('model.@each.open'),
+
+  averageWaitTimeInMinutes: function() {
+    return Math.round((this.get('averageWaitTime') / 60) * 10) / 10 // this rounds the number to 1 decimal place
   }.property('model.@each.open'),
 
   graphData: function() {
@@ -217,7 +225,8 @@ App.HourlyTicketsChartComponent = Ember.Component.extend(
       ykeys: ['tickets'],
       labels: ['Tickets'],
       parseTime: false,
-      lineColors: ['#f05a26']
+      lineColors: ['#f05a26'],
+      resize: true
     });
   }
 });
