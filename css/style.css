@@ -68,6 +68,12 @@ h2 {
   margin-top: 20px
 }
 
+#statistics {
+  background-color: #fff;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
 .sub-heading {
   margin-bottom: 20px;
 }
