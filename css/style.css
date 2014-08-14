@@ -91,6 +91,7 @@ h2 {
 }
 
 .hourly-tickets-graph {
+  height: 200px;
   margin: 20px;
 }
 
@@ -103,10 +104,5 @@ and (max-device-width : 568px) {
 
   body {
     padding-top: 70px;
-  }
-
-  .hourly-tickets-graph {
-    height: 200px;
-    margin: 20px;
   }
 }
