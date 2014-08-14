@@ -185,7 +185,17 @@ App.StatisticsController = Ember.ArrayController.extend({
       }
     });
 
-    return graphData
+    return graphData.sort(function(a, b) {
+      if (a.hour.slice(-2) !== b.hour.slice(-2)) {
+        if (a.hour.slice(-2) === 'am') {
+          return -1;
+        } else {
+          return 1;
+        }
+      } else {
+        return parseInt(a.hour.slice(0, -2)) - parseInt(b.hour.slice(0, -2));
+      }
+    });
   // needs to return something like this [{hour: '8am', tickets: 5}, {hour: '9am', tickets: 7}]
 }.property('model.@each.open')
 });
