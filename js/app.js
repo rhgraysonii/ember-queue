@@ -109,7 +109,7 @@ App.TicketController = Ember.ObjectController.extend({
   }.property('controllers.application.now'),
   actions: {
     closeTicket: function() {
-      this.get('model').setProperties({'closedAt': new Date(), 'open': false});
+      this.get('model').setProperties({'closedAt': new Date(), 'open': false}).save();
     },
     expand: function() {
       this.set('isExpanded', true);
@@ -133,11 +133,11 @@ App.StatisticsController = Ember.ArrayController.extend({
       var createdAt = moment(ticket.get('createdAt'));
       return createdAt.date() === this_day && createdAt.month() === this_month && createdAt.year() === this_year && !ticket.get('open');
     });
-  }.property('model.@each'),
+  }.property('model.@each.open'),
 
   numberOfTickets: function() {
     return this.get('todaysClosedTickets').length
-  }.property('model.@each'),
+  }.property('model.@each.open'),
 
   averageWaitTime: function() {
     var waitTimes = this.get('todaysClosedTickets').map(function(ticket) {
@@ -151,7 +151,35 @@ App.StatisticsController = Ember.ArrayController.extend({
     }) / waitTimes.length
 
     return Math.round(averageTime);
-  }.property('model.@each.open')
+  }.property('model.@each.open'),
+
+  graphData: function() {
+    var graphData = []
+    var todaysTickets = this.get('todaysClosedTickets');
+
+    todaysTickets.forEach(function(ticket) {
+      var formattedHour = moment(ticket.get('createdAt')).format("ha");
+
+      dataPointExisits = graphData.some(function(dataPoint) {
+        return dataPoint.hour === formattedHour;
+      });
+
+      if (dataPointExisits) {
+        graphData.forEach(function(dataPoint) {
+
+          if (dataPoint.hour === formattedHour) {
+
+            dataPoint.tickets += 1
+          }
+        });
+      } else {
+        graphData.push({ hour: formattedHour, tickets: 1 });
+      }
+    });
+
+    return graphData
+  // needs to return something like this [{hour: '8am', tickets: 5}, {hour: '9am', tickets: 7}]
+}.property('model.@each.open')
 });
 
 //Views
@@ -170,6 +198,29 @@ App.TicketView = Ember.View.extend({
     this.get('controller').send('toggleExpanded');
   }
 })
+
+// Components
+App.HourlyTicketsChartComponent = Ember.Component.extend(
+{
+  graph: null,
+  tagName: 'div',
+  classNames: ['hourly-tickets-graph'],
+
+  didInsertElement: function() {
+    var element = this.get('element').id;
+    var self = this;
+
+    this.graph = new Morris.Line({
+      element: element,
+      data: this.get('data'),
+      xkey: 'hour',
+      ykeys: ['tickets'],
+      labels: ['Tickets'],
+      parseTime: false,
+      lineColors: ['#f05a26']
+    });
+  }
+});
 
 // Models
 App.Ticket = DS.Model.extend({
