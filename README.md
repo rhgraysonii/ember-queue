@@ -17,4 +17,6 @@ own. __DONE__
 - As a student, I want to be able to say I no longer need help so a teacher
 doesn't have to come over anymore. __DONE__
 - As a teacher, I want to see statistics on how long tickets are staying open so
-I know if I'm reaching students in a timely manner.
+I know if I'm reaching students in a timely manner. __DONE__
+- As a teacher, I want to be able to navigate between the queue and statistics so
+I can easily switch back and forth.
