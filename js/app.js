@@ -193,7 +193,9 @@ App.StatisticsController = Ember.ArrayController.extend({
           return 1;
         }
       } else {
-        return parseInt(a.hour.slice(0, -2)) - parseInt(b.hour.slice(0, -2));
+        var hour_a = parseInt(a.hour.slice(0, -2)) === 12 ? 0 : parseInt(a.hour.slice(0, -2));
+        var hour_b = parseInt(b.hour.slice(0, -2)) === 12 ? 0 : parseInt(b.hour.slice(0, -2));
+        return hour_a - hour_b;
       }
     });
   // needs to return something like this [{hour: '8am', tickets: 5}, {hour: '9am', tickets: 7}]
